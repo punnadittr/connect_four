@@ -7,7 +7,6 @@ class ConnectFour
 
   def switch_turn
     @piece = @piece == 'O' ? 'X' : 'O'
-    return "#{@piece}'s turn"
   end
 
   def create_board(width, height)
@@ -18,14 +17,39 @@ class ConnectFour
     @board
   end
 
+  def play_game
+    print_board
+    puts
+    puts "#{@piece}'s turn"
+    userinput = nil
+    while userinput == false || userinput.nil?
+      userinput = Integer(gets.chomp) rescue false
+    end
+    make_move(userinput)
+    until game_over?
+      play_game
+    end
+    if game_over?
+      puts 'Reset? (y)'
+      input = gets.chomp
+      if input == 'Y'.downcase || input == 'YES'.downcase
+        reset
+      else
+        exit
+      end
+    end
+  end
+
   # combine put_piece and game_over function to evaluate every move
   def make_move(x, piece = @piece)
-    return 'INVALID MOVE' if put_piece(x, piece) == false
-    print_board
+    if put_piece(x, piece) == false
+      puts 'INVALID MOVE' 
+      return
+    end
     unless game_over?
       switch_turn
     else
-      return "GAME OVER #{@piece} wins!"
+      puts "GAME OVER #{@piece} wins!"
     end
   end
 
@@ -142,6 +166,7 @@ class ConnectFour
       puts " |"
       if i == @board.size - 1
         puts "+---+---+---+---+---+---+---+"
+        puts "  0   1   2   3   4   5   6  "
       end
     end
   end
@@ -177,3 +202,4 @@ end
 
 game = ConnectFour.new
 game.create_board 7,6
+game.play_game
