@@ -175,6 +175,5 @@ class ConnectFour
   end
 end
 
-mygame = ConnectFour.new
-mygame.create_board 7,6
-mygame.make_move(rand(7))
+game = ConnectFour.new
+game.create_board 7,6
