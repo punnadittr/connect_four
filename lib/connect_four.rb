@@ -49,6 +49,7 @@ class ConnectFour
     unless game_over?
       switch_turn
     else
+      print_board
       puts "GAME OVER #{@piece} wins!"
     end
   end
